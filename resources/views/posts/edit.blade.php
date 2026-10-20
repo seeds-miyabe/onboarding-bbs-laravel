@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>投稿編集</h1>
-    
+
     @if ($errors->any())
         <div style="color: red;">
             <ul>
@@ -16,7 +16,7 @@
             </ul>
         </div>
     @endif
-
+    
     <form action="{{ route('posts.update', $post->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -30,9 +30,10 @@
             <textarea name="body">{{ old('body', $post->body) }}</textarea>
         </div>
         
-        <button type="submit">更新する</button>
+        <div style="margin-top: 10px; display: flex; gap: 10px;">
+            <button type="button" onclick="location.href='{{ route('posts.index') }}'">戻る</button>
+            <button type="submit">更新する</button>
+        </div>
     </form>
-    
-    <button type="button" onclick="location.href='{{ route('posts.index') }}'">戻る</button>
 </body>
 </html>

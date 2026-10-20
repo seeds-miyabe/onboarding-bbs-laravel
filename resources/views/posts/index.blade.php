@@ -19,6 +19,15 @@
             <p>{{ $post->body }}</p>
             <small>{{ $post->created_at }}</small>
 
+            <div style="margin-top: 10px;">
+                <button type="button" onclick="location.href='{{ route('posts.edit', $post->id) }}'">編集</button>
+                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+                </form>
+            </div>
+
             <div style="margin-top: 15px; background-color: #f9f9f9; padding: 10px;">
                 <h4>コメント ({{ $post->comments->count() }}件)</h4>
 
@@ -27,7 +36,6 @@
                 @endforeach
 
                 <hr>
-                <!-- 投稿そのものへの通常のコメント投稿フォーム -->
                 <form action="{{ route('comments.store', $post->id) }}" method="POST" style="margin-top: 10px;">
                     @csrf
                     <input type="text" name="body" placeholder="新しいコメントを入力..." required>
