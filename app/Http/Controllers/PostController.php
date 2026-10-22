@@ -31,12 +31,13 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'body' => 'required',
+            'body'  => 'required',
         ]);
 
         Post::create([
-            'title' => $request->title,
-            'body'  => $request->body,
+            'user_id' => auth()->id(),
+            'title'   => $request->title,
+            'body'    => $request->body,
         ]);
 
         return redirect()->route('posts.index')->with('success', '投稿を保存しました！');
@@ -55,6 +56,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        abort_if($post->user_id !== auth()->id(), 403, 'この投稿を編集する権限がありません。');
+
         return view('posts.edit', compact('post'));
     }
 

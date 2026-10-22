@@ -27,7 +27,7 @@
         </div>
 
         <div style="margin-top: 10px; display: flex; gap: 8px;">
-            <button type="button" onclick="location.href='{{ route('posts.index') }}'">キャンセル（一覧へ戻る）</button>
+            <button type="button" onclick="location.href='{{ route('posts.index') }}'">一覧へ戻る</button>
             <button type="submit">更新する</button>
         </div>
     </form>
