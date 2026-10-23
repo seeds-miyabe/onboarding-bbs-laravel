@@ -39,6 +39,11 @@
                 </a>
             @endif
 
+            <a href="{{ route('register') }}" 
+               class="ms-3 inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 tracking-widest hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-400 focus:outline-none transition ease-in-out duration-150">
+                新規登録
+            </a>
+
             <x-primary-button class="ms-3">
                 {{ __('ログイン') }}
             </x-primary-button>
