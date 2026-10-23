@@ -12,10 +12,15 @@
             @auth
                 <span>ようこそ、<strong>{{ Auth::user()->name }}</strong> さん</span>
 
+                <button type="button" onclick="location.href='{{ route('dashboard') }}'">
+                    ダッシュボード
+                </button>
+
                 <form action="{{ route('logout') }}" method="POST" style="display: inline; margin-left: 10px;">
                     @csrf
                     <button type="submit">ログアウト</button>
                 </form>
+
             @endauth
 
             @guest
