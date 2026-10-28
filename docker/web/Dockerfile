@@ -14,9 +14,12 @@ RUN docker-php-ext-install pdo_mysql
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    libicu-dev \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql intl zip \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer    
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer  
 
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
