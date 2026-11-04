@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -52,7 +53,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        abort_if($post->user_id !== auth()->id(), 403, 'この投稿を編集する権限がありません。');
+        $this->authorize('update', $post);
 
         return view('posts.edit', compact('post'));
     }
@@ -60,19 +61,13 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required',
-        ]);
+        $this->authorize('update', $post);
 
-        $post->update([
-            'title' => $request->title,
-            'body'  => $request->body,
-        ]);
+        $post->update($request->validated());
 
-         return redirect()->route('posts.index')->with('success', '投稿を編集しました！');
+        return redirect()->route('posts.index')->with('success', '投稿を編集しました！');
     }
 
     /**
@@ -80,7 +75,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $post->delete();
-         return redirect()->route('posts.index')->with('success', '投稿を削除しました！');
+
+        return redirect()->route('posts.index')->with('success', '投稿を削除しました！');
     }
 }
