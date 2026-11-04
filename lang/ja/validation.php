@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'required'             => ':attributeは必須項目です。',
+
     'accepted'             => ':attributeを承認してください。',
 
     'current_password'     => '現在のパスワードが正しくありません。',
@@ -22,5 +24,9 @@ return [
         'password'              => 'パスワード',
         'password_confirmation' => '確認用パスワード',
         'current_password'      => '現在のパスワード',
+
+        'body'                  => 'コメント本文',
+        'post_id'               => '対象の投稿',
+        'parent_id'             => '返信先コメント',
     ],
 ];
