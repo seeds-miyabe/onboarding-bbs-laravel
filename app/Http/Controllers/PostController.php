@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -27,17 +28,12 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $request->validate([
-            'title' => 'required|max:255',
-            'body'  => 'required',
-        ]);
-
         Post::create([
             'user_id' => auth()->id(),
-            'title'   => $request->title,
-            'body'    => $request->body,
+            'title'   => $request->validated('title'),
+            'body'    => $request->validated('body'),
         ]);
 
         return redirect()->route('posts.index')->with('success', '投稿を保存しました！');
