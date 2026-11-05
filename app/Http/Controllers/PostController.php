@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -80,11 +80,11 @@ class PostController extends Controller
             'user',
             'comments' => function ($query) {
                 $query->whereNull('parent_id')
-                    ->oldest() // 親コメントを古い順（投稿順）に並べる
+                    ->oldest()
                     ->with([
                         'user',
                         'replies' => function ($replyQuery) {
-                            $replyQuery->oldest()->with('user'); // 返信も古い順に並べる
+                            $replyQuery->oldest()->with('user');
                         },
                     ]);
             },
