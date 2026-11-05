@@ -80,9 +80,12 @@ class PostController extends Controller
             'user',
             'comments' => function ($query) {
                 $query->whereNull('parent_id')
+                    ->oldest() // 親コメントを古い順（投稿順）に並べる
                     ->with([
                         'user',
-                        'replies.user',
+                        'replies' => function ($replyQuery) {
+                            $replyQuery->oldest()->with('user'); // 返信も古い順に並べる
+                        },
                     ]);
             },
         ]);

@@ -14,8 +14,13 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+        if (!app()->isLocal()) {
+            $this->command->warn('本番環境では AdminSeeder の実行はスキップされました。');
+            return;
+        }
+
         Admin::updateOrCreate(
-            ['email' => 'admin@example.com'], 
+            ['email' => 'admin@example.com'],
             [
                 'name'     => '管理者',
                 'password' => Hash::make('password123'),
