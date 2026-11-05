@@ -73,4 +73,20 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')->with('success', '投稿を削除しました！');
     }
+
+    public function show(Post $post)
+    {
+        $post->load([
+            'user',
+            'comments' => function ($query) {
+                $query->whereNull('parent_id')
+                    ->with([
+                        'user',
+                        'replies.user',
+                    ]);
+            },
+        ]);
+
+        return view('posts.show', compact('post'));
+    }
 }
