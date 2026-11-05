@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCommentRequest extends FormRequest
 {
@@ -21,9 +22,19 @@ class StoreCommentRequest extends FormRequest
      */
     public function rules(): array
     {
+        $postId = $this->route('post') instanceof \App\Models\Post 
+            ? $this->route('post')->id 
+            : ($this->route('post') ?? $this->input('post_id'));
+
         return [
-            'body'      => ['required', 'string', 'max:1000'],
-            'parent_id' => ['nullable', 'exists:comments,id'],
+            'body' => ['required', 'string', 'max:1000'],
+
+            'parent_id' => [
+                'nullable',
+                Rule::exists('comments', 'id')->where(function ($query) use ($postId) {
+                    $query->where('post_id', $postId);
+                }),
+            ],
         ];
     }
 }
