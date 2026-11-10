@@ -48,7 +48,7 @@ Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
     ->name('comments.destroy')
     ->middleware('auth');
 
-Route::resource('posts', PostController::class)->only(['index', 'show']);
+Route::resource('posts', PostController::class)->only(['index']);
 
 Route::resource('posts', PostController::class)->except(['index', 'show'])->middleware('auth');
 
