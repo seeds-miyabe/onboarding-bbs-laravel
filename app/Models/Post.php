@@ -20,4 +20,14 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function scopeWithFullDetails($query)
+    {
+        return $query->with([
+            'user',
+            'comments.user',
+            'comments.replies.user',
+            'comments.replies.replies',
+        ]);
+    }
 }
