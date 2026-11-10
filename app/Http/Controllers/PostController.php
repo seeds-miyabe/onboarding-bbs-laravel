@@ -12,9 +12,17 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // app/Http/Controllers/PostController.php
+
     public function index()
     {
-        $posts = Post::with('comments')->latest()->get();
+        $posts = Post::with([
+            'user',
+            'comments.user',
+            'comments.replies.user',
+            'comments.replies.replies',
+        ])->latest()->get();
+
         return view('posts.index', compact('posts'));
     }
 
