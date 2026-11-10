@@ -32,8 +32,7 @@ class StoreCommentRequest extends FormRequest
             'parent_id' => [
                 'nullable',
                 Rule::exists('comments', 'id')->where(function ($query) use ($postId) {
-                    $query->where('post_id', $postId)
-                        ->whereNull('parent_id');
+                    $query->where('post_id', $postId);
                 }),
             ],
         ];
